@@ -17,7 +17,9 @@ export const styles = theme => ({
 
 const useStyles = makeStyles(styles)
 
-const getUrl = url => {
+const getUrl = (url, preserveProtocol) => {
+	if (preserveProtocol) return url
+
 	url = (url || "").replace(/^(https?:)?\/\//i, "")
 	if (url) {
 		url = "//" + url
@@ -37,12 +39,13 @@ const Anchor = ({
 	component,
 	className,
 	id,
+	preserveProtocol,
 	...rest
 }) => {
 	const classes = useStyles()
 
 	const isExternal = target && target === "_blank"
-	const url = isExternal ? getUrl(href) : href
+	const url = isExternal ? getUrl(href, preserveProtocol) : href
 
 	const linkProps = {
 		underline: underline || "none",
