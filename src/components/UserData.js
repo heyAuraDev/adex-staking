@@ -8,6 +8,7 @@ import ConfirmationDialog from "./ConfirmationDialog"
 import AppContext from "../AppContext"
 import { ZERO } from "./../helpers/constants"
 import { identityWithdraw } from "../actions"
+import StakingActionButton from "./StakingActionButton"
 
 export default function UserData({ stats, prices }) {
 	const { t } = useTranslation()
@@ -131,14 +132,15 @@ export default function UserData({ stats, prices }) {
 			{hasLegacyIdentityBalance && (
 				<Box mb={1.5}>
 					<Box display="inline-block">
-						<Button
+						<StakingActionButton
+							ButtonComponent={Button}
 							id="btn-rewards-page-claim"
 							variant="contained"
 							color="secondary"
 							onClick={() => setWithdrawIdentityOpen(true)}
 						>
 							{t("common.withdrawLegacy")}
-						</Button>
+						</StakingActionButton>
 					</Box>
 				</Box>
 			)}

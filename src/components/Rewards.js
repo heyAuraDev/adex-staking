@@ -35,7 +35,7 @@ import {
 	// Trans
 } from "react-i18next"
 import CustomTable, { StyledTableCell, StyledTableHead } from "./CustomTable"
-import CustomButton from "./CustomButton"
+import StakingActionButton from "./StakingActionButton"
 
 const RRButton = WithRouterLink(Button)
 
@@ -410,14 +410,14 @@ export default function Rewards() {
 					<Box m={1}>
 						<Tooltip title={disableActionsMsg}>
 							<Box display="inline-block">
-								<CustomButton
+								<StakingActionButton
 									id="btn-rewards-page-claim"
 									btnType="outline"
 									onClick={() => setClaimOpen(true)}
 									disabled={!!disableActionsMsg}
 								>
 									{t("common.claim")}
-								</CustomButton>
+								</StakingActionButton>
 							</Box>
 						</Tooltip>
 					</Box>

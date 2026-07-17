@@ -15,7 +15,7 @@ import clsx from "clsx"
 // import { withStyles } from "@material-ui/core/styles"
 import CancelIcon from "@material-ui/icons/Cancel"
 import Tooltip from "./Tooltip"
-import CustomButton from "./CustomButton"
+import StakingActionButton from "./StakingActionButton"
 
 export const styles = theme => {
 	const spacing = theme.spacing(2)
@@ -145,7 +145,7 @@ export default function WithDialogHoc(Decorated) {
 			<Fragment>
 				<Tooltip title={tooltipTitle || ""}>
 					<Box display="inline-block" {...(fullWidth ? { width: 1 } : {})}>
-						<CustomButton
+						<StakingActionButton
 							id={id}
 							btnType={btnType}
 							w={fullWidth ? "100%" : ""}
@@ -157,7 +157,7 @@ export default function WithDialogHoc(Decorated) {
 						>
 							{icon}
 							{(!iconButton && btnLabel) || ""}
-						</CustomButton>
+						</StakingActionButton>
 					</Box>
 				</Tooltip>
 				<Dialog
