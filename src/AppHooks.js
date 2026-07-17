@@ -36,6 +36,7 @@ import {
 	removeFromLocalStorage,
 	saveToLocalStorage
 } from "./helpers/localStorage"
+import useStakingMigrationBlock from "./hooks/useStakingMigrationBlock"
 
 const REFRESH_INTVL = 300_000 // 300sec
 const REFRESH_INTVL_WALLET = 60_000 // 60sec
@@ -79,6 +80,13 @@ function getErrorMessage(error) {
 
 export default function useApp() {
 	const { addSnack, ...snackHooks } = useSnack()
+	const {
+		stakingMigrationNoticeOpen,
+		openStakingMigrationNotice,
+		closeStakingMigrationNotice,
+		onStakingActionAttempt,
+		guardStakingAction
+	} = useStakingMigrationBlock()
 
 	const {
 		library,
@@ -266,29 +274,30 @@ export default function useApp() {
 	}, [error])
 
 	const wrapDoingTxns = useCallback(
-		fn => async (...args) => {
-			try {
-				setOpenDoingTx(true)
-				setOpenErr(false)
-				const res = await fn.apply(null, args)
-				setOpenDoingTx(false)
-				refreshStats()
-				return res
-			} catch (e) {
-				console.error(e)
-				setOpenDoingTx(false)
-				setSnackbarErr(
-					e.values
-						? {
-								msg: e.message || "errors.unknownError",
-								opts: e.values || {}
-						  }
-						: e.message || "errors.unknownError"
-				)
-				setOpenErr(true)
-			}
-		},
-		[refreshStats]
+		fn =>
+			guardStakingAction(async (...args) => {
+				try {
+					setOpenDoingTx(true)
+					setOpenErr(false)
+					const res = await fn.apply(null, args)
+					setOpenDoingTx(false)
+					refreshStats()
+					return res
+				} catch (e) {
+					console.error(e)
+					setOpenDoingTx(false)
+					setSnackbarErr(
+						e.values
+							? {
+									msg: e.message || "errors.unknownError",
+									opts: e.values || {}
+							  }
+							: e.message || "errors.unknownError"
+					)
+					setOpenErr(true)
+				}
+			}),
+		[guardStakingAction, refreshStats]
 	)
 
 	const onRequestUnbond = useCallback(
@@ -445,6 +454,11 @@ export default function useApp() {
 		idlePopupOpen,
 		onIdleDialogAction,
 		userIdle,
-		updatingStats
+		updatingStats,
+		stakingMigrationNoticeOpen,
+		openStakingMigrationNotice,
+		closeStakingMigrationNotice,
+		onStakingActionAttempt,
+		guardStakingAction
 	}
 }

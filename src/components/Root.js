@@ -21,6 +21,10 @@ import Stats from "./Stats"
 import Pools from "./Pools"
 import StakeNowPopup from "./StakeNowPopup"
 import { MigrateNowPopup, MigrateNowAlert } from "./MigrateNowPopup"
+import {
+	StakingMigrationBanner,
+	StakingMigrationPopup
+} from "./StakingMigrationNotice"
 import NewBondForm from "./NewBondForm"
 import LegacyADXSwapDialog from "./LegacyADXSwapDialog"
 import ConfirmationDialog from "./ConfirmationDialog"
@@ -96,7 +100,9 @@ export default function Root() {
 		onIdleDialogAction,
 		// secondsToAutoRefresh,
 		account,
-		updatingStats
+		updatingStats,
+		stakingMigrationNoticeOpen,
+		closeStakingMigrationNotice
 	} = useContext(AppContext)
 
 	const drawer = SideNav({
@@ -144,6 +150,7 @@ export default function Root() {
 			<main className={classes.content}>
 				<div className={classes.contentInner}>
 					<Box mb={2} className={classes.stickyAlerts}>
+						<StakingMigrationBanner />
 						{stats.hasPendingTransactions && (
 							<Box mt={2}>
 								<Alert severity="warning" variant="filled">
@@ -382,6 +389,11 @@ export default function Root() {
 							</Box>
 						</Fade>
 					</Modal>
+					<StakingMigrationPopup
+						open={stakingMigrationNoticeOpen}
+						onClose={closeStakingMigrationNotice}
+						className={clsx(classes.modal, classes.alwaysOnTop)}
+					/>
 					<MigrateNowPopup />
 				</div>
 			</main>
