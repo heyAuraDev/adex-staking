@@ -1,9 +1,5 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import App from './App';
+import { STAKING_ACTIONS_DISABLED } from "./helpers/stakingMigration"
 
-test('renders learn react link', () => {
-  const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
-});
+test("keeps legacy staking transactions disabled during migration", () => {
+	expect(STAKING_ACTIONS_DISABLED).toBe(true)
+})
