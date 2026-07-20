@@ -41,7 +41,7 @@ export function StakingMigrationMessage({ idPrefix }) {
 
 export function StakingMigrationBanner() {
 	return (
-		<Alert id="staking-migration-banner" severity="info">
+		<Alert id="staking-migration-banner" severity="warning">
 			<StakingMigrationMessage idPrefix="staking-migration-banner" />
 		</Alert>
 	)

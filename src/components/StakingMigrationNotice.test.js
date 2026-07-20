@@ -20,6 +20,8 @@ describe("StakingMigrationBanner", () => {
 		renderWithTheme(<StakingMigrationBanner />)
 
 		const alert = screen.getByRole("alert")
+		expect(alert).toHaveClass("MuiAlert-filledWarning")
+		expect(alert).not.toHaveClass("MuiAlert-filledInfo")
 		expect(normalizedText(alert)).toBe(EXPECTED_MESSAGE)
 
 		const stakingLink = screen.getByRole("link", {
@@ -57,9 +59,10 @@ describe("StakingMigrationPopup", () => {
 		renderWithTheme(<StakingMigrationPopup open onClose={onClose} />)
 
 		const dialog = screen.getByRole("dialog")
-		expect(normalizedText(within(dialog).getByRole("alert"))).toBe(
-			`${EXPECTED_MESSAGE}Close`
-		)
+		const alert = within(dialog).getByRole("alert")
+		expect(alert).toHaveClass("MuiAlert-filledInfo")
+		expect(alert).not.toHaveClass("MuiAlert-filledWarning")
+		expect(normalizedText(alert)).toBe(`${EXPECTED_MESSAGE}Close`)
 
 		fireEvent.click(within(dialog).getByRole("button", { name: "Close" }))
 		expect(onClose).toHaveBeenCalledTimes(1)
