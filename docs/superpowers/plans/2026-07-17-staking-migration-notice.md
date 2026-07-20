@@ -634,6 +634,7 @@ const stats = {
 	userBalance: ZERO,
 	totalLockedOnDeposits: ZERO,
 	userTotalStake: ZERO,
+	totalStaked: ZERO,
 	totalPendingToUnlock: ZERO,
 	totalUnlockedDeposits: ZERO,
 	tomRewardADX: ZERO,
